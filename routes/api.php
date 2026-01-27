@@ -4,11 +4,8 @@ use App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
-
-Route::get('/Dashboard', [Controllers\DashboardController::class, 'index'])->name('index');
-
-Route::get('/subject/', [Controllers\AssignmentController::class, 'index'])->name('index');
-Route::post('/subject/assignment', [Controllers\AssignmentController::class, 'store'])->name('store');
+Route::get('/dashboard', [Controllers\DashboardController::class, 'index']);
+Route::get('/user', [Controllers\UserController::class, 'index']);
+Route::post('/user/store', [Controllers\UserController::class, 'store']);
+Route::put('/user/update/{id}', [Controllers\UserController::class, 'update']);
+Route::get('/user/delete/{id}', [Controllers\UserController::class, 'delete']);
