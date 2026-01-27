@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Subject;
+use App\Models\Assignment;
 
 class AssignmentController extends Controller
 {
