@@ -13,9 +13,14 @@ Route::put('/user/update/{id}', [Controllers\UserController::class, 'update']);
 Route::delete('/user/delete/{id}', [Controllers\UserController::class, 'delete']);
 
 Route::get('/', [Controllers\SchoolController::class, 'index']);
-Route::post('/school', [Controllers\SchoolController::class, 'store']);
-Route::put('/school/{school}', [Controllers\SchoolController::class, 'update']);
-Route::delete('/school/{school}', [Controllers\SchoolController::class, 'destroy']);
+Route::post('/school/store', [Controllers\SchoolController::class, 'store']);
+Route::put('/school/update/{school}', [Controllers\SchoolController::class, 'update']);
+Route::delete('/school/delete/{school}', [Controllers\SchoolController::class, 'destroy']);
+
+Route::get('/school/{school}/subject', [Controllers\SubjectController::class, 'index']);
+Route::post('/school/{school}/subject/store', [Controllers\SubjectController::class, 'store']);
+Route::put('/school/{school}/subject/update/{subject}', [Controllers\SubjectController::class, 'update']);
+Route::delete('/school/{school}/subject/delete/{subject}', [Controllers\SubjectController::class, 'destroy']);
 
 Route::get('/subject/', [Controllers\AssignmentController::class, 'index']);
 Route::post('/subject/assignment', [Controllers\AssignmentController::class, 'store']);
