@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('assignment_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->json('files')->nullable();
-            $table->date('submitted_at')->nullable();
+            $table->datetime('submitted_at')->nullable();
             $table->string('status')->nullable();
             $table->decimal('grade', 5, 2)->nullable();
             $table->timestamps();

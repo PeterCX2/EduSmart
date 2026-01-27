@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->unsignedBigInteger('subject_id')->nullable();
-            $table->date('deadline')->nullable();
+            $table->datetime('deadline')->nullable();
             $table->string('created_by')->nullable();
             $table->timestamps();
             $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
