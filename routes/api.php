@@ -4,6 +4,9 @@ use App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+Route::post('/login', [Controllers\AuthController::class, 'login']);
+Route::post('/logout', [Controllers\AuthController::class, 'logout'])->middleware('auth:sanctum');
+
 Route::get('/user', [Controllers\UserController::class, 'index']);
 Route::post('/user/store', [Controllers\UserController::class, 'store']);
 Route::put('/user/update/{id}', [Controllers\UserController::class, 'update']);
