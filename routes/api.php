@@ -9,21 +9,25 @@ Route::post('/logout', [Controllers\AuthController::class, 'logout'])->middlewar
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [Controllers\UserController::class, 'index']);
+    Route::get('/user/show/{id}', [Controllers\UserController::class, 'show']);
     Route::post('/user/store', [Controllers\UserController::class, 'store']);
     Route::put('/user/update/{id}', [Controllers\UserController::class, 'update']);
     Route::delete('/user/delete/{id}', [Controllers\UserController::class, 'delete']);
 
     Route::get('/school', [Controllers\SchoolController::class, 'index']);
+    Route::get('/school/show/{school}', [Controllers\SchoolController::class, 'show']);
     Route::post('/school/store', [Controllers\SchoolController::class, 'store']);
     Route::put('/school/update/{school}', [Controllers\SchoolController::class, 'update']);
     Route::delete('/school/delete/{school}', [Controllers\SchoolController::class, 'destroy']);
 
     Route::get('/school/{school}/subject', [Controllers\SubjectController::class, 'index']);
+    Route::get('/school/{school}/subject/show/{subject}', [Controllers\SubjectController::class, 'show']);
     Route::post('/school/{school}/subject/store', [Controllers\SubjectController::class, 'store']);
     Route::put('/school/{school}/subject/update/{subject}', [Controllers\SubjectController::class, 'update']);
     Route::delete('/school/{school}/subject/delete/{subject}', [Controllers\SubjectController::class, 'destroy']);
 
     Route::get('/school/{school}/subject/{subject}/assignment', [Controllers\AssignmentController::class, 'index']);
+    Route::get('/school/{school}/subject/{subject}/assignment/show/{assignment}', [Controllers\AssignmentController::class, 'show']);
     Route::post('/school/{school}/subject/{subject}/assignment/store', action: [Controllers\AssignmentController::class, 'store']);
     Route::put('/school/{school}/subject/{subject}/assignment/update/{assignment}', [Controllers\AssignmentController::class, 'update']);
     Route::delete('/school/{school}/subject/{subject}/assignment/delete/{assignment}', [Controllers\AssignmentController::class, 'destroy']);
