@@ -8,6 +8,7 @@ use App\Models\School;
 use App\Models\Subject;
 use App\Models\Assignment;
 use App\Models\Submission;
+use Illuminate\Support\Str;
 
 class SubmissionController extends Controller
 {
@@ -30,13 +31,24 @@ class SubmissionController extends Controller
 
         $validated = $request->validate([
             'files' => 'required|array',
-            'files.*' => 'string',
+            'files.*' => 'file|max:5120',
         ]);
+
+        $files = [];
+
+        foreach ($request->file('files') as $file) {
+            $path = $file->storeAs('submissions', $file->getFilename() . '.' . $file->getClientOriginalExtension(), 'public');
+
+            $files[] = [
+                'path' => $path,
+                'original_name' => $file->getClientOriginalName(),
+            ];
+        }
 
         $submission = Submission::create([
             'assignment_id' => $assignment->id,
-            'user_id' => Auth::user()->id,
-            'files' => $validated['files'],
+            'user_id' => Auth::id(),
+            'files' => $files,
             'submitted_at' => now(),
             'status' => 'submitted',
         ]);
@@ -53,12 +65,12 @@ class SubmissionController extends Controller
 
         $validated = $request->validate([
             'grade' => 'required|numeric|min:0|max:100',
-            'status' => 'nullable|string'
+            'status' => 'nullable|string|in:graded,returned',
         ]);
 
         $submission->update([
             'grade' => $validated['grade'],
-            'status' => $validated['status'] ?? 'graded'
+            'status' => $validated['status'] ?? 'graded',
         ]);
 
         return response()->json([

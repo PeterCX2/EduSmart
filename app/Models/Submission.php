@@ -21,6 +21,19 @@ class Submission extends Model
         'grade' => 'decimal:2',
     ];
 
+    protected $appends = ['file_urls'];
+
+    public function getFileUrlsAttribute()
+    {
+        return collect($this->files)->map(function ($file) {
+            return [
+                'url' => asset('storage/' . $file['path']),
+                'original_name' => $file['original_name'],
+            ];
+        });
+    }
+
+
      public function assignment(){
         return $this->belongsTo(Assignment::class);
     }
