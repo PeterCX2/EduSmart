@@ -13,7 +13,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/user/update/{id}', [Controllers\UserController::class, 'update']);
     Route::delete('/user/delete/{id}', [Controllers\UserController::class, 'delete']);
 
-    Route::get('/', [Controllers\SchoolController::class, 'index']);
+    Route::get('/school', [Controllers\SchoolController::class, 'index']);
     Route::post('/school/store', [Controllers\SchoolController::class, 'store']);
     Route::put('/school/update/{school}', [Controllers\SchoolController::class, 'update']);
     Route::delete('/school/delete/{school}', [Controllers\SchoolController::class, 'destroy']);
