@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\School;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Subject;
@@ -9,7 +10,7 @@ use App\Models\Assignment;
 
 class AssignmentController extends Controller
 {
-    public function index(Subject $subject)
+    public function index(School $school, Subject $subject)
     {
         $assignments = $subject->assignments()->paginate(10);
         return response()->json([
@@ -17,21 +18,19 @@ class AssignmentController extends Controller
         ]);
     }
 
-    public function store(Subject $subject, Request $request)
+    public function store(School $school, Subject $subject, Request $request)
     {
         $validatedRequest = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string|max:255',
-            'deadline' => 'required|date|date_format:d-m-Y'
+            'deadline' => 'required|date'
         ]);
 
-        // $validatedRequest['subject_id'] = $subject->id;
-        $validatedRequest['subject_id'] = 1;
-        // $validatedRequest['created_by'] = Auth::user()->name;
-        $validatedRequest['created_by'] = 'User';
+        $validatedRequest['subject_id'] = $subject->id;
+        $validatedRequest['created_by'] = Auth::user()->name;
         
         $assignment = Assignment::create($validatedRequest);
-
+        
         return response()->json([
             'status' => 'success',
             'message' => 'Tugas berhasil dibuat',
@@ -39,12 +38,12 @@ class AssignmentController extends Controller
         ]);
     }
 
-    public function update(Request $request, Subject $subject, Assignment $assignment)
+    public function update(Request $request, School $school, Subject $subject, Assignment $assignment)
     {
         $validatedRequest = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string|max:255',
-            'deadline' => 'required|date|date_format:d-m-Y'
+            'deadline' => 'required|date'
         ]);
 
         $assignment->update($validatedRequest);
@@ -56,14 +55,14 @@ class AssignmentController extends Controller
         ]);
     }
 
-    public function destroy(Subject $subject)
+    public function destroy(School $school, Subject $subject, Assignment $assignment)
     {
-        $subject->delete();
+        $assignment->delete();
 
         return response()->json([
             'status' => 'success',
             'message'=> 'Tugas berhasil dihapus',
-            'data' => $subject
+            'data' => $assignment
         ]);
     }
 }
