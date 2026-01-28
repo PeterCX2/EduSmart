@@ -25,8 +25,13 @@ class Submission extends Model
         return $this->belongsTo(Assignment::class);
     }
 
-
     public function user(){
         return $this->belongsTo(User::class);
     }
+
+    public function feedbacks()
+    {
+        return $this->hasMany(SubmissionFeedback::class);
+    }
+
 }
