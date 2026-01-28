@@ -18,6 +18,15 @@ class SchoolController extends Controller
         ]);
     }
 
+    public function show(School $school)
+    {
+        return response()->json([
+            "status" => "success",
+            "message" => "Detail sekolah berhasil diambil",
+            "data" => $school
+        ]);
+    }
+
     public function store(Request $request)
     {
         $validatedRequest = $request->validate([

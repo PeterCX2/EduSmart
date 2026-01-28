@@ -20,6 +20,16 @@ class UserController extends Controller
         ]);
     }
 
+    public function show($id){
+        $user = User::with(['roles', 'permissions'])->find($id);
+
+        return response()->json([
+            'status'=> 'success',
+            'message' => 'User retrieved successfully',
+            'data' => $user   
+        ]);
+    }
+
     public function store(Request $request){
         $request->validate([
             'name' => 'required|string|max:255',
