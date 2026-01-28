@@ -39,19 +39,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/schools/{school}/subjects/{subject}/assignments/{assignment}/submissions/{submission}/feedbacks', [Controllers\SubmissionFeedbackController::class, 'index'])->middleware('permission:view submission_feedback');
     Route::post('/schools/{school}/subjects/{subject}/assignments/{assignment}/submissions/{submission}/feedbacks/store',[Controllers\SubmissionFeedbackController::class, 'store'])->middleware('permission:create submission_feedback');
-    Route::delete('/schools/{school}/subjects/{subject}/assignments/{assignment}/submissions/{submission}/submission-feedbacks/{submissionFeedback}/delete',[Controllers\SubmissionFeedbackController::class, 'destroy'])->middleware('permission:delete submission_feedback');
+    Route::delete('/schools/{school}/subjects/{subject}/assignments/{assignment}/submissions/{submission}/feedbacks/{feedback}/delete',[Controllers\SubmissionFeedbackController::class, 'destroy'])->middleware('permission:delete submission_feedback');
 
     Route::get('/role', [Controllers\RoleController::class, 'index'])->middleware('permission:view roles');
     Route::get('/role/show/{role}', [Controllers\RoleController::class, 'show'])->middleware('permission:view roles');
     Route::post('/role/store', [Controllers\RoleController::class, 'store'])->middleware('permission:create roles');
     Route::put('/role/update/{role}', [Controllers\RoleController::class, 'update'])->middleware('permission:edit roles');
     Route::delete('/role/delete/{role}', [Controllers\RoleController::class, 'destroy'])->middleware('permission:delete roles');
-    Route::get('/schools/{school}/subjects/{subject}/assignments/{assignment}/submissions', [Controllers\SubmissionController::class, 'index']);
-    Route::post('/schools/{school}/subjects/{subject}/assignments/{assignment}/submissions/store', [Controllers\SubmissionController::class, 'store']);
-    Route::put('/schools/{school}/subjects/{subject}/assignments/{assignment}/submissions/{submission}/grade',[Controllers\SubmissionController::class, 'grade']);
-    Route::delete('/schools/{school}/subjects/{subject}/assignments/{assignment}/submissions/{submission}/delete',[Controllers\SubmissionController::class, 'destroy']);
-
-    Route::get('/schools/{school}/subjects/{subject}/assignments/{assignment}/submissions/{submission}/feedbacks', [Controllers\SubmissionFeedbackController::class, 'index']);
-    Route::post('/schools/{school}/subjects/{subject}/assignments/{assignment}/submissions/{submission}/feedbacks/store',[Controllers\SubmissionFeedbackController::class, 'store']);
-    Route::delete('/schools/{school}/subjects/{subject}/assignments/{assignment}/submissions/{submission}/feedbacks/{feedback}/delete',[Controllers\SubmissionFeedbackController::class, 'destroy']);
 });
