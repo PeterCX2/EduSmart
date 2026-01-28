@@ -27,4 +27,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/school/{school}/subject/{subject}/assignment/store', action: [Controllers\AssignmentController::class, 'store']);
     Route::put('/school/{school}/subject/{subject}/assignment/update/{assignment}', [Controllers\AssignmentController::class, 'update']);
     Route::delete('/school/{school}/subject/{subject}/assignment/delete/{assignment}', [Controllers\AssignmentController::class, 'destroy']);
+    
+    Route::get('/schools/{school}/subjects/{subject}/assignments/{assignment}/submissions', [Controllers\SubmissionController::class, 'index']);
+    Route::post('/schools/{school}/subjects/{subject}/assignments/{assignment}/submissions/store', [Controllers\SubmissionController::class, 'store']);
+    Route::put('/schools/{school}/subjects/{subject}/assignments/{assignment}/submissions/{submission}/grade',[Controllers\SubmissionController::class, 'grade']);
+    Route::delete('/schools/{school}/subjects/{subject}/assignments/{assignment}/submissions/{submission}/delete',[Controllers\SubmissionController::class, 'destroy']);
 });
