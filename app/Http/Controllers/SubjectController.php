@@ -19,6 +19,15 @@ class SubjectController extends Controller
         ]);
     }
 
+    public function show(School $school, Subject $subject)
+    {
+        return response()->json([
+            "status"=> "success",
+            "message"=> "Deatil Subject berhasil diambil dari {$school->name}",
+            "data"=> $subject
+        ]);
+    }
+
     public function store(School $school, Request $request)
     {
         $validatedRequest = $request->validate([

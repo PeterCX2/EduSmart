@@ -18,6 +18,15 @@ class AssignmentController extends Controller
         ]);
     }
 
+    public function show(School $school, Subject $subject, Assignment $assignment)
+    {
+        return response()->json([
+            "status" => "success",
+            "message" => "Detail Assignment berhasil diambil",
+            "data"=> $assignment
+        ]);
+    }
+
     public function store(School $school, Subject $subject, Request $request)
     {
         $validatedRequest = $request->validate([
