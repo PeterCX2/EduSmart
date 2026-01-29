@@ -13,7 +13,7 @@ class SchoolController extends Controller
 
         if ($user->hasRole('super-admin')) {
             return response()->json([
-                'data' => School::all()
+                'data' => School::withCount('users')->get()
             ]);
         }
 
