@@ -52,4 +52,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Submission::class);
     }
+
+    public function schools()
+    {
+        return $this->belongsToMany(School::class, 'user_schools');
+    }
 }
