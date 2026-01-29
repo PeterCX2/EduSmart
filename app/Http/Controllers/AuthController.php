@@ -25,10 +25,23 @@ class AuthController extends Controller
 
         $token = $user->createToken('api-token')->plainTextToken;
 
+        $user->load('roles');
+
         return response()->json([
             'status' => 'success',
             'token' => $token,
-            'token_type' => 'Bearer'
+            'token_type' => 'Bearer',
+            'user' => [
+                'id'=> $user->id,
+                'name' => $user->name,
+                'email'=> $user->email,
+                'roles' => $user->roles->map(function($role) {
+                    return [
+                        'id' => $role->id,
+                        'name' => $role->name
+                    ];
+                })
+            ]
         ]);
     }
 
