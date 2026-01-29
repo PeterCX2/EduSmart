@@ -48,7 +48,7 @@ class UserController extends Controller
         $roles = $request->roles;
         $user->assignRole($roles);
 
-        $user->load('roles', 'permissions');
+        $user->load('roles');
 
         return response()->json([
             'status' => 'success',
