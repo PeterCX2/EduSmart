@@ -16,7 +16,7 @@ class SubmissionController extends Controller
     {
         $submissions = $assignment->submissions()
             // ->where('user_id', Auth::id())
-            ->with('user')
+            ->with(['user', 'feedback'])
             ->latest('submitted_at')
             ->get();
 
@@ -78,13 +78,20 @@ class SubmissionController extends Controller
 
         $validated = $request->validate([
             'grade' => 'required|numeric|min:0|max:100',
-            'status' => 'nullable|string|in:graded,returned',
+            'feedback' => 'nullable|string|max:255'
         ]);
 
         $submission->update([
             'grade' => $validated['grade'],
-            'status' => $validated['status'] ?? 'graded',
+            'status' => 'graded',
         ]);
+
+        if (!empty($validated['feedback'])) {
+            SubmissionFeedback::updateOrCreate(
+                ['submission_id' => $submission->id],
+                ['feedback' => $validated['feedback']]
+            );
+        }
 
         return response()->json([
             'status' => 'success',
