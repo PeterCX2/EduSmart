@@ -12,6 +12,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user/show/{id}', [Controllers\UserController::class, 'show'])->middleware('permission:view users');
     Route::post('/user/store', [Controllers\UserController::class, 'store'])->middleware('permission:create users');
     Route::put('/user/update/{id}', [Controllers\UserController::class, 'update'])->middleware('permission:edit users');
+    Route::put('/user/{user}/schools', [Controllers\UserSchoolController::class, 'update'])->middleware('permission:edit users');
     Route::delete('/user/delete/{id}', [Controllers\UserController::class, 'delete'])->middleware('permission:delete users');
 
     Route::get('/school', [Controllers\SchoolController::class, 'index'])->middleware('permission:view schools');
