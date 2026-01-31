@@ -17,7 +17,7 @@ class Submission extends Model
 
     protected $casts = [
         'files' => 'array',
-        'submitted_at' => 'date',
+        'submitted_at' => 'datetime',
         'grade' => 'decimal:2',
     ];
 
@@ -34,17 +34,19 @@ class Submission extends Model
     }
 
 
-     public function assignment(){
+     public function assignment()
+     {
         return $this->belongsTo(Assignment::class);
     }
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function feedbacks()
+    public function feedback()
     {
-        return $this->hasMany(SubmissionFeedback::class);
+        return $this->hasOne(SubmissionFeedback::class);
     }
 
 }
