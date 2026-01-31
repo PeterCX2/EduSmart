@@ -58,8 +58,29 @@ class RolePermissionSeeder extends Seeder
         }
 
         $superAdminRole = Role::firstOrCreate(['name' => 'super-admin', 'guard_name' => 'web']);
+        $teacherRole = Role::firstOrCreate(['name' => 'teacher', 'guard_name' => 'web']);
+        $studentRole = Role::firstOrCreate(['name' => 'student', 'guard_name' => 'web']);
         
         $superAdminRole->syncPermissions(Permission::all());
+
+        $teacherPermissions = Permission::whereIn('name', [
+            'view schools',
+            'view subjects', 'create subjects', 'edit subjects', 'delete subjects',
+            'view assignments', 'create assignments', 'edit assignments', 'delete assignments',
+            'view submissions', 'grade submissions', 'delete submissions',
+            'view submission_feedback', 'create submission_feedback', 'delete submission_feedback',
+        ])->get();
+
+        $teacherRole->syncPermissions($teacherPermissions);
+
+        $studentPermissions = Permission::whereIn('name', [
+            'view subjects',
+            'view assignments',
+            'view submissions', 'create submissions', 'delete submissions',
+            'view submission_feedback'
+        ])->get();
+
+        $studentRole->syncPermissions($studentPermissions);
 
         \App\Models\User::firstOrCreate([
             'name' => 'SuperAdmin',
