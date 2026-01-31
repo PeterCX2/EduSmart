@@ -12,9 +12,22 @@ use Illuminate\Support\Str;
 
 class SubmissionController extends Controller
 {
-    public function index(School $school, Subject $subject, Assignment $assignment) {
-        abort_if($assignment->subject_id !== $subject->id, 404);
+    public function index(School $school, Subject $subject, Assignment $assignment) 
+    {
+        $submissions = $assignment->submissions()
+            // ->where('user_id', Auth::id())
+            ->with('user')
+            ->latest('submitted_at')
+            ->get();
 
+        return response()->json([
+            'status' => 'success',
+            'data' => $submissions
+        ]);
+    }
+
+    public function mySubmissions(School $school, Subject $subject, Assignment $assignment)
+    {
         $submissions = $assignment->submissions()
             ->where('user_id', Auth::id())
             ->latest('submitted_at')
@@ -31,7 +44,7 @@ class SubmissionController extends Controller
 
         $validated = $request->validate([
             'files' => 'required|array',
-            'files.*' => 'file|max:5120',
+            'files.*' => 'file',
         ]);
 
         $files = [];
