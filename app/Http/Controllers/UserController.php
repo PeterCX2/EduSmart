@@ -19,9 +19,9 @@ class UserController extends Controller
             'users' => $users
         ]);
     }
-
+    
     public function show($id){
-        $user = User::with(['roles', 'permissions'])->find($id);
+        $user = User::with(['roles', 'schools'])->find($id);
 
         return response()->json([
             'status'=> 'success',
@@ -58,12 +58,14 @@ class UserController extends Controller
     }
 
     public function update(Request $request, $id){
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8',
-            'roles' => 'required|array',
+            'email' => 'required|string|email|max:255',
+            'password' => 'string|min:8|confirmed',
+            'roles' => 'array',
             'roles.*' => 'exists:roles,name',
+            'school_ids' => 'nullable|array', // ✅ ubah ke plural
+            'school_ids.*' => 'exists:schools,id'
         ]);
 
         $user = User::find($id);
@@ -74,16 +76,29 @@ class UserController extends Controller
             ], 404);
         }
 
+        // Update user data
         $user->update([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password),
         ]);
 
-        $roles = $request->roles;
-        $user->syncRoles($roles);
+        if (!empty($validated['password'])) {
+            $user->update([
+                'password' => bcrypt($validated['password']),
+            ]);
+        }
 
-        $user->load('roles', 'permissions');
+        // Sync roles
+        if (isset($validated['roles'])) {
+            $user->syncRoles($validated['roles']);
+        }
+
+        // ✅ Sync multiple schools
+        if (isset($validated['school_ids'])) {
+            $user->schools()->sync($validated['school_ids']);
+        }
+
+        $user->load('roles', 'schools');
 
         return response()->json([
             'status' => 'success',
