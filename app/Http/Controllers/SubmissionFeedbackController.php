@@ -13,7 +13,7 @@ use App\Models\SubmissionFeedback;
 class SubmissionFeedbackController extends Controller
 {
     public function index(School $school, Subject $subject, Assignment $assignment, Submission $submission){
-        $feedbacks = $submission->feedbacks()->latest()->get();
+        $feedbacks = $submission->feedback()->latest()->get();
         return response()->json([
             'status' => 'success',
             'data' => $feedbacks
