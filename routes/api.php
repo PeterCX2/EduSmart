@@ -39,7 +39,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/schools/{school}/subjects/{subject}/assignments/{assignment}/submissions/{submission}/feedbacks', [Controllers\SubmissionFeedbackController::class, 'index'])->middleware('permission:view submission_feedback');
     Route::post('/schools/{school}/subjects/{subject}/assignments/{assignment}/submissions/{submission}/feedbacks/store',[Controllers\SubmissionFeedbackController::class, 'store'])->middleware('permission:create submission_feedback');
-    Route::delete('/schools/{school}/subjects/{subject}/assignments/{assignment}/submissions/{submission}/submission-feedbacks/{submissionFeedback}/delete',[Controllers\SubmissionFeedbackController::class, 'destroy'])->middleware('permission:delete submission_feedback');
+    Route::delete('/schools/{school}/subjects/{subject}/assignments/{assignment}/submissions/{submission}/feedbacks/{feedback}/delete',[Controllers\SubmissionFeedbackController::class, 'destroy'])->middleware('permission:delete submission_feedback');
 
     Route::get('/role', [Controllers\RoleController::class, 'index'])->middleware('permission:view roles');
     Route::get('/role/show/{role}', [Controllers\RoleController::class, 'show'])->middleware('permission:view roles');

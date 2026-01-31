@@ -7,14 +7,20 @@ use Illuminate\Http\Request;
 
 class SchoolController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $school = School::all();
+        $user = auth()->user();
+
+        if ($user->hasRole('super-admin')) {
+            return response()->json([
+                'data' => School::withCount('users')->get()
+            ]);
+        }
 
         return response()->json([
             "status" => "success",
             "message" => "Data School berhasil diambil",
-            "data" => $school
+            'data' => $user->schools
         ]);
     }
 

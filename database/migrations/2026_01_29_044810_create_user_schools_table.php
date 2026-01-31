@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('user_schools', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('school_id')->nullable();
-            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('school_id');
             $table->timestamps();
-            $table->foreign('school_id')->references('id')->on('schools')->onDelete('set null');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
+
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('school_id')->references('id')->on('schools')->cascadeOnDelete();
         });
     }
 
