@@ -11,12 +11,16 @@ class RoleController extends Controller
 {
     public function index()
     {
-        $roles = Role::all();
+        $roles = Role::with('permissions')->get();
+        $permissions = Permission::all();
 
         return response()->json([
             "status" => "success",
             "message" => "Data Role berhasil diambil",
-            "data" => $roles
+            "data" => [
+                $roles,
+                $permissions
+            ]
         ]);
     }
 
