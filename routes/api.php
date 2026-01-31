@@ -33,6 +33,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/school/{school}/subject/{subject}/assignment/delete/{assignment}', [Controllers\AssignmentController::class, 'destroy'])->middleware('permission:delete assignments');
     
     Route::get('/schools/{school}/subjects/{subject}/assignments/{assignment}/submissions', [Controllers\SubmissionController::class, 'index'])->middleware('permission:view submissions');
+    Route::get('/schools/{school}/subjects/{subject}/assignments/{assignment}/submissions/student', [Controllers\SubmissionController::class, 'mySubmissions'])->middleware('permission:view submissions');
     Route::post('/schools/{school}/subjects/{subject}/assignments/{assignment}/submissions/store', [Controllers\SubmissionController::class, 'store'])->middleware('permission:create submissions');
     Route::put('/schools/{school}/subjects/{subject}/assignments/{assignment}/submissions/{submission}/grade',[Controllers\SubmissionController::class, 'grade'])->middleware('permission:grade submissions');
     Route::delete('/schools/{school}/subjects/{subject}/assignments/{assignment}/submissions/{submission}/delete',[Controllers\SubmissionController::class, 'destroy'])->middleware('permission:delete submissions');
