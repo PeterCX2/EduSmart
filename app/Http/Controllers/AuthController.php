@@ -25,7 +25,7 @@ class AuthController extends Controller
 
         $token = $user->createToken('api-token')->plainTextToken;
 
-        $user->load('roles');
+        $user->load(['roles', 'schools']);
 
         return response()->json([
             'status' => 'success',
@@ -40,7 +40,13 @@ class AuthController extends Controller
                         'id' => $role->id,
                         'name' => $role->name
                     ];
-                })
+                }),
+                'schools' => $user->schools->map(function($school) {
+                    return [
+                        'id' => $school->id,
+                        'name' => $school->name
+                    ];
+                }),
             ]
         ]);
     }
